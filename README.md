@@ -1,5 +1,5 @@
 # Braaains
-Braaains is a text-based zombie roguelike game that I worked on in the subject Object Oriented Design and Implementation. The engine was provided by the University and I created additional functionality using the engine as the base. The game runs on the Java console so you would need an ide if you want to run it
+Braaains is a text-based zombie roguelike game that I worked on in the subject Object Oriented Design and Implementation. The engine was provided by the University and I created additional functionality using the engine as the base. The game cannot be played because I don't have permission to upload the engine. 
 
 ## Description of the game
 The player was one of the survivors in a zombie apocalypse. The player will have to survive by killing zombies with a variety of weapons from fists, melee weapons and even firearms like shotgun and sniper rifle. The player can move across two different maps at will to find better gear or to survive the zombie menace.
