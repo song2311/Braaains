@@ -1,0 +1,161 @@
+package game;
+
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actions;
+import edu.monash.fit2099.engine.Display;
+import edu.monash.fit2099.engine.DoNothingAction;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Item;
+/**
+ * A subclass of ZombieActor that represents an Mambo Marie.
+ * 
+ * @author Tan Song Shun
+ *
+ */
+public class MamboMarie extends ZombieActor{
+	//Mambo Marie can either wander around or perform a chant to create zombies
+	private Behaviour[] behaviours={
+		new ChantBehaviour(),
+		new WanderBehaviour()
+		};
+	//the number of turns Mambo Marie had appeared on the map
+	private int turn_count=0;
+	//the number of rounds between chanting
+	public static final int CHANT_ROUND=10;
+	
+	/**
+	 * This is the constructor for the MamboMarie class, ZombieCapability is set
+	 * as UNDEAD so player and humans can attack and kill her.
+	 * 
+	 * 
+	 */
+	public MamboMarie() {
+		super("Mambo Marie", 'M', 200, ZombieCapability.UNDEAD);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int getHp() {
+		// TODO Auto-generated method stub
+		return super.hitPoints;
+	}
+
+	@Override
+	public int getMaxHp() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void dropArm(int Arm) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dropLeg(int Leg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getArm() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getLeg() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void set_sniper_ammo(int count) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int get_sniper_ammo() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void set_shotgun_ammo(int count) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int get_shotgun_ammo() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+		turn_count+=1;
+		for (Behaviour behaviour : behaviours) {
+			Action action = behaviour.getAction(this, map);
+			if (action != null)
+				return action;
+		}
+		return new DoNothingAction();	
+	}
+
+	@Override
+	public int get_turn_count() {
+		// TODO Auto-generated method stub
+		return turn_count;
+	}
+	
+	public void set_turn_count() {
+		turn_count=0;
+	}
+
+	@Override
+	public Action get_lastAction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void set_previous_health() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Boolean damaged() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String create_corpse(GameMap map) {
+		 if (!this.isConscious()) {
+				Corpse corpse = new Corpse(this);
+				map.locationOf(this).addItem(corpse);
+				
+				Actions dropActions = new Actions();
+				for (Item item : this.getInventory())
+					dropActions.add(item.getDropAction());
+				for (Action drop : dropActions)		
+					drop.execute(this, map);
+				map.removeActor(this);	
+				
+				return System.lineSeparator() + this + " is killed.";
+		}
+		 return "";
+			
+	}
+
+	@Override
+	public int chant_round() {
+		// TODO Auto-generated method stub
+		return CHANT_ROUND;
+	}
+
+}
